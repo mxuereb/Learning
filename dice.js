@@ -42,18 +42,19 @@ function rollUntilNumberOfKind(numberOfSides, numberOfDice, numberToMatch, numbe
         rollResult = rollMultiple(numberOfSides, diceLeftToRoll);
         matches = rollResult[numberToMatch - 1];
         diceLeftToRoll = diceLeftToRoll - matches;
-        if (matches => numberOfKind) {
-          foundMatch = true;
+        if (matches >= numberOfKind) {
+            foundMatch = true;
         }
         else {
           foundMatch = (diceLeftToRoll === 0);
         }
-    console.log('matches so far', matches, 'number of kind ', numberOfKind);;
-    console.log('dice left to roll', diceLeftToRoll);;
-    console.log('totalRolls', rollResult);;
+    console.log('matches so far', matches, 'number of kind ', numberOfKind);
+    console.log('dice left to roll', diceLeftToRoll);
+    console.log('totalRolls', rollResult);
     return totalRolls;
     }
-console.log('roll 6 d6, until they there are at least 5 matches of 1 -> Totalrolls =', rollUntilAllMatch(6, 6, 1, 5));
+}
+console.log('roll 6 d6, until they there are at least 5 matches of 1 -> Totalrolls =', rollUntilNumberOfKind(6, 6, 1, 5));
 
 //This function just runs the above function as many times as you'd like and keeps
 //a running count of the number of rolls it took.  That total is then used to
