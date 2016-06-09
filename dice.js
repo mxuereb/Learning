@@ -69,4 +69,9 @@ function getAverageRollsToMatch(numberOfSides, numberOfDice, numberToMatch, numb
 }
 
 //This rolls 5 six-sided dice 10000 times.  It looks to match the number 1.
-console.log('roll 6 d6 until there are at least 5 matches OF 1, do it 10000 times ->', getAverageRollsToMatch(6, 6, 1, 5, 10000));
+console.log('roll 6 d6 until there are at least 1 matches OF 1, do it 100000 times ->', getAverageRollsToMatch(6, 6, 1, 1, 100000));
+console.log('roll 6 d6 until there are at least 2 matches OF 1, do it 100000 times ->', getAverageRollsToMatch(6, 6, 1, 2, 100000));
+console.log('roll 6 d6 until there are at least 3 matches OF 1, do it 100000 times ->', getAverageRollsToMatch(6, 6, 1, 3, 100000));
+console.log('roll 6 d6 until there are at least 4 matches OF 1, do it 100000 times ->', getAverageRollsToMatch(6, 6, 1, 4, 100000));
+console.log('roll 6 d6 until there are at least 5 matches OF 1, do it 100000 times ->', getAverageRollsToMatch(6, 6, 1, 5, 100000));
+console.log('roll 6 d6 until there are at least 6 matches OF 1, do it 100000 times ->', getAverageRollsToMatch(6, 6, 1, 6, 100000));
