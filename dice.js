@@ -3,7 +3,7 @@
 function rollSingle(numberOfSides) {
     return Math.floor((Math.random() * numberOfSides) + 1);
 }
-console.log('roll a single 6-sided dice ->', rollSingle(6));
+//console.log('roll a single 6-sided dice ->', rollSingle(6));
 
 //Tell it how many dice to roll and how many sides.
 //It'll return an array of counts for each side.
@@ -36,25 +36,24 @@ function rollUntilNumberOfKind(numberOfSides, numberOfDice, numberToMatch, numbe
     var totalRolls = 0;
     var rollResult = [];
     var matches = 0;
+    var matchesTotal = 0;
 
     while (!foundMatch) {
         totalRolls++;
         rollResult = rollMultiple(numberOfSides, diceLeftToRoll);
         matches = rollResult[numberToMatch - 1];
+        matchesTotal += matches;
         diceLeftToRoll = diceLeftToRoll - matches;
-        if (matches >= numberOfKind) {
+        if (matchesTotal >= numberOfKind) {
             foundMatch = true;
         }
         else {
-          foundMatch = (diceLeftToRoll === 0);
+            foundMatch = (diceLeftToRoll === 0);
         }
-    console.log('matches so far', matches, 'number of kind ', numberOfKind);
-    console.log('dice left to roll', diceLeftToRoll);
-    console.log('totalRolls', rollResult);
-    return totalRolls;
     }
+    return totalRolls;
 }
-console.log('roll 6 d6, until they there are at least 5 matches of 1 -> Totalrolls =', rollUntilNumberOfKind(6, 6, 1, 5));
+//console.log('roll 6 d6, until they there are at least 5 matches of 1 -> Totalrolls =', rollUntilNumberOfKind(6, 6, 1, 5));
 
 //This function just runs the above function as many times as you'd like and keeps
 //a running count of the number of rolls it took.  That total is then used to
@@ -63,10 +62,10 @@ function getAverageRollsToMatch(numberOfSides, numberOfDice, numberToMatch, numb
     var i;
     var runningTotal = 0;
     for (i = 0; i < loops; i++) {
-        runningTotal += rollUntilAllMatch(numberOfSides, numberOfDice, numberToMatch, numberOfKind);
+        runningTotal += rollUntilNumberOfKind(numberOfSides, numberOfDice, numberToMatch, numberOfKind);
     }
     return runningTotal / loops;
 }
 
 //This rolls 5 six-sided dice 10000 times.  It looks to match the number 1.
-//console.log('roll 6 d6 until there are at least 3 matches, do it 10000 times ->', getAverageRollsToMatch(6, 6, 1, 1, 10000));
+console.log('roll 6 d6 until there are at least 5 matches OF 1, do it 10000 times ->', getAverageRollsToMatch(6, 6, 1, 5, 10000));
