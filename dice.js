@@ -25,6 +25,43 @@ function rollMultiple(numberOfSides, numberOfDice) {
 }
 //console.log('roll 6 d6 and count results->', rollMultiple(6, 6));
 
+//Roll until i have one of each kind on a d6 and return the average number of rolls needed
+function rollOneOfEachKind(numberOfSides, numberOfDice) {
+
+  var matchFound = false;
+  var counts = [0,0,0,0,0,0];
+  var diceLeftToRoll = numberOfDice;
+  var totalRolls = 0;
+  var i;
+
+  while (diceLeftToRoll!=0) {
+        for (i = 0; i < diceLeftToRoll; i++) {
+            roll = rollSingle(numberOfSides);
+            if (counts[roll-1] == 0) {
+//              console.log (" value ",roll, counts[roll-1]);
+              counts[roll-1] = 1;
+              diceLeftToRoll--;
+            }
+            totalRolls++;
+        }
+  }
+  return totalRolls;
+}
+//console.log('Rolls for one of each kind on a d6', rollOneOfEachKind(6,6));
+
+//This function just runs the above function as many times as you'd like and keeps
+//a running count of the number of rolls it took.  That total is then used to
+//determine the average number of rolls required
+function getAverageRollsOneOfEachKind(numberOfSides, numberOfDice, loops) {
+    var i;
+    var runningTotal = 0;
+
+    for (i = 0; i < loops; i++) {
+        runningTotal += rollOneOfEachKind(numberOfSides, numberOfDice);
+    }
+    return runningTotal / loops;
+}
+console.log('Average number of rolls for one of ach kind, with 100000 loops', getAverageRollsOneOfEachKind(6,6,100000));
 
 //This function rolls a set of dice until they all match the supplied
 //number. After each roll, it checks to see how many matches there were
@@ -157,9 +194,9 @@ function getAverageRollsToMatchWithSeed(numberOfSides, numberOfDice, numberToMat
 }
 
 //This rolls 6 six-sided dice 100000 times.  It looks to match the number 1 a number of times.
-console.log(getAverageRollsToMatchWithSeed(6, 3, 1, 1, 100000));
-console.log(getAverageRollsToMatchWithSeed(6, 3, 1, 2, 100000));
-console.log(getAverageRollsToMatchWithSeed(6, 3, 1, 3, 100000));
+//console.log(getAverageRollsToMatchWithSeed(6, 3, 1, 1, 100000));
+//console.log(getAverageRollsToMatchWithSeed(6, 3, 1, 2, 100000));
+//console.log(getAverageRollsToMatchWithSeed(6, 3, 1, 3, 100000));
 //console.log(getAverageRollsToMatchWithSeed(6, 4, 1, 4, 100000));
 //console.log(getAverageRollsToMatchWithSeed(6, 5, 1, 5, 100000));
 //console.log(getAverageRollsToMatchWithSeed(6, 6, 1, 6, 100000));
