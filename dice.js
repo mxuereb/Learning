@@ -38,12 +38,13 @@ function rollOneOfEachKind(numberOfSides, numberOfDice) {
         for (i = 0; i < diceLeftToRoll; i++) {
             roll = rollSingle(numberOfSides);
             if (counts[roll-1] == 0) {
-//              console.log (" value ",roll, counts[roll-1]);
               counts[roll-1] = 1;
               diceLeftToRoll--;
+            //console.log('new number found', roll -1);
             }
-            totalRolls++;
         }
+        totalRolls++;
+  //console.log('Rolls', totalRolls, 'dice left', diceLeftToRoll );
   }
   return totalRolls;
 }
