@@ -1,11 +1,18 @@
+<!DOCTYPE html>
 <html>
+  <!--This title appears in the window tab of the browser-->
   <head>
-    <title>Max's First Page</title>
-    <script type="application/javascript" src="./firstScript.js"></script>
+    <title>Dice Roller App</title>
+    <script type="application/javascript" src="./dice.js"></script>
   </head>
   <body>
-    My first awesome text.
-    <input type="text" value="whatever"/>
-    <button type="button" onclick="getFoo()">Change Something</button>
+    <h1>Max's Brute force roller.</h1>
+    <form>
+      <label for="rolledDice">Number of Dice to roll</label>
+      <input type="text" id="rolledDice"/>
+      <label for="matchingSides">Number of Matching Sides</label>
+      <input type="text" id="matchingSides"/>
+      <input type="submit" value="Submit">
+    </form>
   </body>
 </html>

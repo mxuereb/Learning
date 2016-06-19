@@ -14,7 +14,6 @@ function rollMultiple(numberOfSides, numberOfDice) {
     var i;
     for (i = 0; i < numberOfSides; i++) {
         counts[i] = 0;
-
     }
     var roll;
     for (i = 0; i < numberOfDice; i++) {
@@ -62,20 +61,33 @@ function getAverageRollsOneOfEachKind(numberOfSides, numberOfDice, loops) {
     }
     return runningTotal / loops;
 }
-console.log('Average number of rolls for one of ach kind, with 100000 loops', getAverageRollsOneOfEachKind(6,6,100000));
+//console.log('Average number of rolls for one of ach kind, with 100000 loops', getAverageRollsOneOfEachKind(6,6,100000));
 
 //This function rolls a set of dice until they all match the supplied
 //number. After each roll, it checks to see how many matches there were
 //and sets those dice aside.  This is repeated until the specific number of dice match.
 //The result is the number of rolls it took to get the number of matches specificied.
-function rollUntilNumberOfKind(numberOfSides, numberOfDice, numberToMatch, numberOfKind) {
+function rollUntilNumberOfKind(numberOfSides, numberOfDice, numberOfLocked, numberToMatch, numberOfKind) {
 
     var foundMatch = false;
     var diceLeftToRoll = numberOfDice;
     var totalRolls = 0;
     var rollResult = [];
+    var counts = [];
     var matches = 0;
     var matchesTotal = 0;
+
+    //console.log('\nRoll', numberOfDice,'d', numberOfSides, 'locked', numberOfLocked,'until at least', numberOfKind, 'of a kinds');
+
+    rollResult = rollMultiple(numberOfSides, numberOfLocked);
+    matches = rollResult[numberToMatch - 1];
+    matchesTotal += matches;
+    diceLeftToRoll = diceLeftToRoll - numberOfLocked;
+    //console.log('\nDice left', diceLeftToRoll,'locked', numberOfLocked,'number of matches', matchesTotal);
+    if ((diceLeftToRoll + matchesTotal) < numberOfKind) {
+        foundMatch = true;
+        totalRolls = 100;
+    }
 
     while (!foundMatch) {
         totalRolls++;
@@ -83,6 +95,7 @@ function rollUntilNumberOfKind(numberOfSides, numberOfDice, numberToMatch, numbe
         matches = rollResult[numberToMatch - 1];
         matchesTotal += matches;
         diceLeftToRoll = diceLeftToRoll - matches;
+        //console.log('Dice left', diceLeftToRoll,'locked', numberOfLocked,'number of kind', matchesTotal);
         if (matchesTotal >= numberOfKind) {
             foundMatch = true;
         }
@@ -92,33 +105,37 @@ function rollUntilNumberOfKind(numberOfSides, numberOfDice, numberToMatch, numbe
     }
     return totalRolls;
 }
-//console.log('roll 6 d6, until they there are at least 5 matches of 1 -> Totalrolls =', rollUntilNumberOfKind(6, 6, 1, 5));
+//console.log(rollUntilNumberOfKind(6, 6, 0, 1, 5));
+//console.log(rollUntilNumberOfKind(6, 6, 1, 1, 5));
+//console.log(rollUntilNumberOfKind(6, 6, 2, 1, 5));
+//console.log(rollUntilNumberOfKind(6, 6, 3, 1, 5));
+//console.log(rollUntilNumberOfKind(6, 6, 4, 1, 5));
 
 
 //This function just runs the above function as many times as you'd like and keeps
 //a running count of the number of rolls it took.  That total is then used to
 //determine the average number of rolls required
-function getAverageRollsToMatch(numberOfSides, numberOfDice, numberToMatch, numberOfKind, loops) {
+function getAverageRollsToMatch(numberOfSides, numberOfDice, numberOfLocked, numberToMatch, numberOfKind, loops) {
     var i;
     var runningTotal = 0;
 
-    console.log('\nRoll', numberOfDice,'d',numberOfSides, 'until there are at least', numberOfKind, 'of a kind, over', loops, 'rolls');
+    console.log('\nRoll', numberOfDice,'d', numberOfSides, 'locked', numberOfLocked,'until at least', numberOfKind, 'of a kind, over', loops, 'rolls');
     for (i = 0; i < loops; i++) {
-        runningTotal += rollUntilNumberOfKind(numberOfSides, numberOfDice, numberToMatch, numberOfKind);
+        runningTotal += rollUntilNumberOfKind(numberOfSides, numberOfDice, numberOfLocked, numberToMatch, numberOfKind);
     }
     return runningTotal / loops;
 }
 
 //This rolls 6 six-sided dice 100000 times.  It looks to match the number 1 a number of times.
-//console.log(getAverageRollsToMatch(6, 9, 1, 1, 100000));
-//console.log(getAverageRollsToMatch(6, 9, 1, 2, 100000));
-//console.log(getAverageRollsToMatch(6, 9, 1, 3, 100000));
-//console.log(getAverageRollsToMatch(6, 9, 1, 4, 100000));
-//console.log(getAverageRollsToMatch(6, 9, 1, 5, 100000));
-//console.log(getAverageRollsToMatch(6, 9, 1, 6, 100000));
-//console.log(getAverageRollsToMatch(6, 9, 1, 7, 100000));
-//console.log(getAverageRollsToMatch(6, 9, 1, 8, 100000));
-//console.log(getAverageRollsToMatch(6, 9, 1, 9, 100000));
+// (numberOfSides, numberOfDice, numberOfLocked, numberToMatch, numberOfKind, loops)
+var input = 9;
+
+console.log(getAverageRollsToMatch(6, 10, 0, 1, input, 100000));
+console.log(getAverageRollsToMatch(6, 10, 1, 1, input, 100000));
+console.log(getAverageRollsToMatch(6, 10, 2, 1, input, 100000));
+console.log(getAverageRollsToMatch(6, 10, 3, 1, input, 100000));
+console.log(getAverageRollsToMatch(6, 10, 4, 1, input, 100000));
+
 
 //This function returns the most matches regards of the specific face of the
 //dice rolled the once which will in turn be used as the icon to match to determine the
